@@ -20,6 +20,7 @@ public class HiddenPlatform : MonoBehaviour
     }
     private void Update()
     {
+        if (moving) return;
         elapsed += Time.deltaTime;
         if (elapsed >= timeToHide)
         {

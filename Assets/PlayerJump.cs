@@ -30,27 +30,21 @@ public class PlayerJump : MonoBehaviour
     // Apply initial speed if player can jump
     public void Jump()
     {
-        if (canJump)
-        {
-            speed = Mathf.Sqrt(2 * gravity * JumpHeight);
-            canJump = false;
-            timepeaking = 0f;
-        }
+        speed = Mathf.Sqrt(2 * gravity * JumpHeight);
+        canJump = false;
+        timepeaking = 0f;
     }
 
     public void DoJump()
     {
-        if (!canJump)
+        if (speed > 0f)
         {
-            if (speed > 0f)
-            {
-                timepeaking += Time.fixedDeltaTime;
-                ch.Move(speed * Time.fixedDeltaTime * Vector3.up);
-            }
-            else
-                ch.Move(speed * fallSpeedMultiplier * Time.fixedDeltaTime * Vector3.up);
-            speed -= gravity * Time.fixedDeltaTime;
+            timepeaking += Time.fixedDeltaTime;
+            ch.Move(speed * Time.fixedDeltaTime * Vector3.up);
         }
+        else
+            ch.Move(speed * fallSpeedMultiplier * Time.fixedDeltaTime * Vector3.up);
+        speed -= gravity * Time.fixedDeltaTime;
     }
 
     // Land on ground

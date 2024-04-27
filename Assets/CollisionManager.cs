@@ -11,7 +11,6 @@ public class CollisionManager : MonoBehaviour
     [Tooltip("Distance to detect the ground")]
     [SerializeField] private float distanceToGround = 0.1f;
 
-    private Transform playerTransform;
     private bool onWall = false;
     private Vector3 wallDirection;
 
@@ -24,13 +23,17 @@ public class CollisionManager : MonoBehaviour
         Vector3 raycastOrigin = transform.position;
         Gizmos.DrawLine(raycastOrigin, raycastOrigin - Vector3.up * (playerHeight / 2 + distanceToGround));
     }
-    private void Start()
-    {
-        playerTransform = transform;
-    }
     public bool IsGrounded()
     {
-        return Physics.Raycast(playerTransform.position, -Vector3.up, playerHeight / 2 + distanceToGround, groundLayer);
+        RaycastHit info;
+        bool b = Physics.Raycast(transform.position, -Vector3.up, out info, playerHeight / 2 + distanceToGround, groundLayer);
+        if (b)
+        {
+            Plataforma p = info.collider.GetComponent<Plataforma>();
+            if (p != null)
+                StartCoroutine(p.Drop());
+        }
+        return b;
     }
     private void OnCollisionStay(Collision collision)
     {

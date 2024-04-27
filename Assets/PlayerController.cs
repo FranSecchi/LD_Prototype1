@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log(cm.IsGrounded());
         myMovement.Move();
         CheckJump();
         CheckWallCollision();
@@ -66,6 +67,11 @@ public class PlayerController : MonoBehaviour
     private void JumpPress()
     {
         if (!cm.IsGrounded()) return;
+        isJumping = true;
+        myJump.Jump();
+    }
+    public void JumpOnEnemy()
+    {
         isJumping = true;
         myJump.Jump();
     }

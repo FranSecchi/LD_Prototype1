@@ -113,8 +113,13 @@ public class Enemy1 : MonoBehaviour
     {
         if (!isRotating)
         {
-            rb.velocity = Vector3.ProjectOnPlane((currentTarget.position - transform.position),Vector3.up).normalized * chaseSpeed;
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            if (Vector3.Distance(currentTarget.position, transform.position) < 1f)
+                rb.velocity = Vector3.zero;
+            else
+            {
+                rb.velocity = Vector3.ProjectOnPlane((currentTarget.position - transform.position), Vector3.up).normalized * chaseSpeed;
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            }
         }
     }
     private void DetectPlayer()
@@ -190,7 +195,8 @@ public class Enemy1 : MonoBehaviour
     {
         hitbox.gameObject.SetActive(false);
            Color color = GetComponent<Renderer>().material.color;
-        GetComponent<Renderer>().material.color = Color.black;
+        rb.velocity = Vector3.zero;
+        GetComponent<Renderer>().material.color = Color.yellow;
         isTonto = true;
         yield return new WaitForSeconds(tontoTime);
         hitbox.gameObject.SetActive(true);

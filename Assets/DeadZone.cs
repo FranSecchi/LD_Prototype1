@@ -13,9 +13,9 @@ public class DeadZone : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        transform.position += Vector3.up * speed * Time.deltaTime;
+        transform.position += Vector3.up * speed * Time.fixedDeltaTime;
     }
     private void OnTriggerEnter(Collider other)
     {

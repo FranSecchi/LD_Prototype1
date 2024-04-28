@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class HealthSystem : MonoBehaviour, IReceiveDamage
 {
+    [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Transform checkPoint;
     [SerializeField] private int lifes;
     private int hp;
@@ -12,6 +14,7 @@ public class HealthSystem : MonoBehaviour, IReceiveDamage
     private void Start()
     {
         hp = lifes;
+        text.text = "Lifes: " + hp;
     }
 
     private void Awake()
@@ -20,14 +23,20 @@ public class HealthSystem : MonoBehaviour, IReceiveDamage
     }
     public void Die()
     {
-        transform.position = checkPoint.position;
-        hp = lifes;
+        StartCoroutine(Dead());
     }
     public void TakeDamage(GameObject actor)
     {
         --hp;
-        Debug.Log("Hit by: " + actor.name+" Lifes: " + hp);
+        text.text = "Lifes: " + hp;
         if(hp == 0)
             Die();
+    }
+    private IEnumerator Dead()
+    {
+        yield return new WaitForEndOfFrame();
+        transform.position = checkPoint.position;
+        hp = lifes;
+        text.text = "Lifes: " + hp;
     }
 }

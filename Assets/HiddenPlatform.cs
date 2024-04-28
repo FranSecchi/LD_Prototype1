@@ -6,7 +6,7 @@ using UnityEngine;
 public class HiddenPlatform : MonoBehaviour
 {
     [Header("Target a on anira la plataforma")]
-    [SerializeField] private Transform target;
+    [SerializeField] private float HideMuch;
     [SerializeField] private float timeToHide;
     [SerializeField] private float timeToAppear;
     [SerializeField] private float speed;
@@ -15,14 +15,20 @@ public class HiddenPlatform : MonoBehaviour
     private bool hide = false;
     private bool moving = false;
     private Vector3 initialpos;
+    private Vector3 targetpos;
     private void Start()
     {
-        initialpos = startHidden ? target.position : transform.position;
         if (startHidden)
         {
-            elapsed = timeToHide;
-
+            initialpos = transform.position - HideMuch * transform.right;
+            targetpos = transform.position;
         }
+        else
+        {
+            initialpos = transform.position;
+            targetpos = transform.position - HideMuch * transform.right; 
+        }
+        transform.position = initialpos;
     }
     private void Update()
     {
@@ -47,7 +53,7 @@ public class HiddenPlatform : MonoBehaviour
     private IEnumerator Move(bool v)
     {
         moving = true;
-        Vector3 pos = v?target.position : initialpos;
+        Vector3 pos = v? targetpos : initialpos;
         while(Vector3.Distance(transform.position, pos) > 0.1f)
         {
             transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * speed);

@@ -25,6 +25,14 @@ public class Plataforma : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        gameObject.SetActive(false);
+        StartCoroutine(Reactive());
+    }
+    public IEnumerator Reactive()
+    {
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().enabled = false;
+        yield return new WaitForSeconds(4f);
+        GetComponent<Collider>().enabled = true;
+        GetComponent<Renderer>().enabled = true;
     }
 }

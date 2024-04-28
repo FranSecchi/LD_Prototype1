@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Pinx : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject go = collision.gameObject;
+
+        GameObject go = other.gameObject;
         IReceiveDamage damagable = go.GetComponent<IReceiveDamage>();
         if (damagable != null)
         {

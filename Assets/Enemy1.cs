@@ -26,6 +26,7 @@ public class Enemy1 : MonoBehaviour
     private bool isChasing = false;
     private bool isTonto = false;
     private int targetIndex = 0;
+    private int indexsign = -1;
     #region -Gizmos-
     private void OnDrawGizmos()
     {
@@ -97,7 +98,8 @@ public class Enemy1 : MonoBehaviour
         float distance = Vector3.Distance(transform.position, currentTarget.position);
         if (!isRotating && distance < 0.1f)
         {
-            targetIndex = targetIndex == patrolPoints.Length - 1 ? 0 : targetIndex + 1;
+            if ((targetIndex == patrolPoints.Length - 1 && indexsign > 0) || (targetIndex == 0 && indexsign < 0)) indexsign *= -1;
+            targetIndex += indexsign;
             currentTarget = patrolPoints[targetIndex];
             rb.velocity = Vector3.zero;
             isRotating = true;

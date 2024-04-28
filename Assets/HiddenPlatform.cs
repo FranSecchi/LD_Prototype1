@@ -10,13 +10,19 @@ public class HiddenPlatform : MonoBehaviour
     [SerializeField] private float timeToHide;
     [SerializeField] private float timeToAppear;
     [SerializeField] private float speed;
+    [SerializeField] private bool startHidden;
     private float elapsed = 0f;
     private bool hide = false;
     private bool moving = false;
     private Vector3 initialpos;
     private void Start()
     {
-        initialpos = transform.position;
+        initialpos = startHidden ? target.position : transform.position;
+        if (startHidden)
+        {
+            elapsed = timeToHide;
+
+        }
     }
     private void Update()
     {

@@ -6,6 +6,7 @@ using System;
 
 public class Enemy1 : MonoBehaviour
 {
+    [SerializeField] private Transform hitbox;
     [Header("--LanternBot Variables--")]
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private float patrolSpeed;
@@ -171,31 +172,26 @@ public class Enemy1 : MonoBehaviour
         IReceiveDamage damagable = go.GetComponent<IReceiveDamage>();
         if (damagable != null)
         {
-                Debug.Log(go.transform.position.y - transform.position.y);
-            if (go.transform.position.y - transform.position.y > 0.2f)
-            {
-                go.GetComponent<PlayerController>().JumpOnEnemy();
-                isChasing = false;
-                isRotating = true;
-                StartCoroutine(Tonto());
-            }
-            else
-            {
-                damagable.TakeDamage(gameObject);
-                currentTarget = patrolPoints[targetIndex];
-                isChasing = false;
-                isRotating = true;
-
-            }
+            damagable.TakeDamage(gameObject);
+            currentTarget = patrolPoints[targetIndex];
+            isChasing = false;
+            isRotating = true;
         }
     }
-
+    public void Atontar()
+    {
+        isChasing = false;
+        isRotating = true;
+        StartCoroutine(Tonto());
+    }
     private IEnumerator Tonto()
     {
-        Color color = GetComponent<Renderer>().material.color;
+        hitbox.gameObject.SetActive(false);
+           Color color = GetComponent<Renderer>().material.color;
         GetComponent<Renderer>().material.color = Color.black;
         isTonto = true;
         yield return new WaitForSeconds(tontoTime);
+        hitbox.gameObject.SetActive(true);
         isTonto = false;
         GetComponent<Renderer>().material.color = color;
     }

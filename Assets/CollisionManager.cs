@@ -6,6 +6,7 @@ public class CollisionManager : MonoBehaviour
     [Header("Layer masks")]
     [Tooltip("Layers that player can jump from")]
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
     [Tooltip("Height for ground detection")]
     [SerializeField] private float playerHeight = 1.8f;
     [Tooltip("Distance to detect the ground")]
@@ -25,6 +26,7 @@ public class CollisionManager : MonoBehaviour
     }
     public bool IsGrounded()
     {
+        if (transform == null) return false;
         RaycastHit info;
         bool b = Physics.Raycast(transform.position, -Vector3.up, out info, playerHeight / 2 + distanceToGround, groundLayer);
         if (b)
@@ -34,6 +36,14 @@ public class CollisionManager : MonoBehaviour
                 StartCoroutine(p.Drop());
         }
         return b;
+    }
+    public GameObject HitsEnemy()
+    {
+        RaycastHit info;
+        bool b = Physics.Raycast(transform.position, -Vector3.up, out info, playerHeight / 2 + distanceToGround, enemyLayer);
+        GameObject p = null;
+            if(b) p = info.collider.gameObject;
+        return p;
     }
     private void OnCollisionStay(Collision collision)
     {

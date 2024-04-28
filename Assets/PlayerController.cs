@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(cm.IsGrounded());
         myMovement.Move();
         CheckJump();
         CheckWallCollision();
@@ -48,6 +47,16 @@ public class PlayerController : MonoBehaviour
     // Checks if the player is jumping, landing or falling
     private void CheckJump()
     {
+        GameObject go = cm.HitsEnemy();
+        if ( go != null)
+        {
+            JumpOnEnemy();
+            Enemy1 e = go.transform.GetComponentInParent<Enemy1>();
+            if (e != null)
+                e.Atontar();
+            else
+                Destroy(go);
+        }
         if (isJumping)
         {
             myJump.DoJump();

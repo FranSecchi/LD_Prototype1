@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour, IReceiveDamage
 {
@@ -22,7 +23,6 @@ public class HealthSystem : MonoBehaviour, IReceiveDamage
         transform.position = checkPoint.position;
         hp = lifes;
     }
-
     public void TakeDamage(GameObject actor)
     {
         --hp;

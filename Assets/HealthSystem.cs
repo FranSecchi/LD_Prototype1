@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour, IReceiveDamage
 {
@@ -38,5 +39,6 @@ public class HealthSystem : MonoBehaviour, IReceiveDamage
         transform.position = checkPoint.position;
         hp = lifes;
         text.text = "Lifes: " + hp;
+        SceneManager.LoadScene(0);
     }
 }

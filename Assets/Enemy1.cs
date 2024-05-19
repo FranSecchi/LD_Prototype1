@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System;
 
 public class Enemy1 : MonoBehaviour
@@ -216,21 +215,5 @@ public class Enemy1 : MonoBehaviour
 
         }
 
-    }
-}
-
-
-[CustomEditor(typeof(Enemy1))]
-public class LanternbotEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        Enemy1 myScript = (Enemy1)target;
-        if (GUILayout.Button("Set Patrol Points Height"))
-        {
-            myScript.SetPointsInPosition();
-        }
     }
 }
